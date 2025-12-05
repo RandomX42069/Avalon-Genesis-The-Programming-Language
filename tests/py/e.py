@@ -1,0 +1,1 @@
+print("dsds#dsdsdsds#ddsds".split("#"))

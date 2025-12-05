@@ -1,0 +1,17 @@
+v0.1
+%segment test.ag # example
+(
+after this the Avalon Genesis source of 'test.ag'
+will be included in the main source file,
+can be chained but if 'test.ag' have:
+%segment mainSourceName.ag
+then it could cause a recursive error
+)
+
+v0.2 unification
+@segment file.ag /* 
+Document comment
+right now AGLANG parser uses shlex library to parse pure string on this instead of raw splits
+example:
+@segment "Multi token file name if doesnt uses shlexs split function.ag"
+*/

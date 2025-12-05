@@ -1,0 +1,15 @@
+v0.1
+syntax:
+@non-function functionName(arg)
+// this function won't get converted to a NASM function in the assembly Output
+// but rather add it's functionality to the assembly output
+@endnf
+
+for example:
+@non-function printf_var(varName)
+    asmd(varName, "_length equ $-", varName)
+    asmm("sys_write ", varName, " ", varName, "_length")
+@endnf
+
+v0.2
+nothing...

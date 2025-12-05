@@ -1,0 +1,15 @@
+Avalon Genesis Documentation Index
+-----------------------------------
+[acronym]   Core module acronyms (AGC, AGI, AGP)
+[asm]       Assembly embedding functions
+[constants] Interpreter and compiler constant table
+[efunction] Interpreted-only function system
+[ffagc]     Compiler communication functions
+[header]    Header export system
+[keywords]  Internal keyword definitions
+[segment]   File inclusion and linking
+[settings]  Avalon Genesis settings
+[agc]       AGC work Load
+
+NOTE THAT THIS IS OUTDATED AND THIS IS PUBLISHED ON 23/10/2025
+RIGHT NOW IS 20/11/2025 IN VIETNAM

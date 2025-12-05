@@ -1,0 +1,450 @@
+; Linux ABI Chunk
+
+; Dummy macro just for development btw
+; RAX
+%macro sys_ 0
+%endmacro
+
+; RAX 1
+%macro sys_read 1
+    mov rax, 0                  ; syscall number for read
+    mov rdi, 0                  ; file descriptor (stdin)
+    mov rsi, %1                 ; buffer
+    mov rdx, 256                ; count
+    syscall
+%endmacro
+
+; RAX 2
+%macro sys_write 2
+    mov rax, 1
+    mov rdi, 1
+    lea rsi, [rel %1]
+    mov rdx, %2
+    syscall
+%endmacro
+
+; RAX 3
+%macro sys_close 0
+    mov rax, 3                     ; syscall number for close
+    syscall
+%endmacro
+
+; RAX 4
+%macro sys_stat 2
+    mov rax, 4
+    lea rdi, [rel %1]
+    lea rsi, [rel %2]
+    syscall
+%endmacro
+
+; RAX 5
+%macro sys_fstat 1
+    mov rax, 5            ; syscall number 5: sys_fstat
+    mov rdi, r12          ; unsigned int fd
+    lea rsi, [rel %1]     ; struct stat *statbuf
+    syscall
+
+    test rax, rax
+    js _exit_error_code_1
+%endmacro
+
+; RAX 6
+%macro sys_lstat 2
+    mov rax, 6          ; syscall number (sys_lstat)
+    lea rdi, [rel %1]   ; filename pointer
+    lea rsi, [rel %2]   ; stat struct pointer
+    syscall
+
+    ; check return value
+    cmp rax, 0
+    jl _exit_error_code_1
+%endmacro
+
+; RAX 7
+%macro sys_poll 2
+    mov rax, 7              ; sys_poll
+    lea rdi, [rel %1]
+    mov rsi, 1              ; nfds = 1
+    mov rdx, %2             ; timeout (ms)
+    syscall
+
+    ; check return
+    test rax, rax
+    je _exit_error_code_2
+    jl _exit_error_code_1
+%endmacro
+
+; RAX 8
+%macro sys_lseek 3
+    mov rax, 8             ; sys_lseek
+    mov rdi, %1            ; fd
+    mov rsi, %2            ; offset = 10 bytes
+    mov rdx, %3            ; origin = SEEK_SET
+    syscall
+%endmacro
+
+; RAX 9
+%macro sys_mmap 6
+    mov rax, 9
+    mov rdi, %1       ; addr
+    mov rsi, %2       ; length
+    mov rdx, %3       ; prot
+    mov r10, %4       ; flags
+    mov r8, %5        ; fd
+    mov r9, %6        ; offset
+    syscall
+%endmacro
+
+; RAX 10
+%macro sys_mprotect 1
+    mov rax, 10
+    mov rdi, r12          ; start
+    mov rsi, %1           ; len
+    mov rdx, 0x1          ; PROT_READ only
+    syscall
+%endmacro
+
+; RAX 11
+%macro sys_munmap 1
+    mov rax, 11             ; sys_munmap
+    mov rdi, r12            ; starting address
+    mov rsi, %1             ; length
+    syscall
+%endmacro
+
+; RAX 12
+%macro sys_brk 0
+    mov rax, 12        ; sys_brk
+    xor rdi, rdi       ; 0 → just query
+    syscall
+%endmacro
+
+; RAX 13
+%macro sys_sigaction 2
+    mov rax, 13       ; syscall number
+    mov rdi, %1       ; SIGINT
+    lea rsi, [rel %2] ; pointer to sigaction
+    xor rdx, rdx      ; oldact = NULL
+    mov r10, 8        ; size of sigset_t
+    syscall
+%endmacro
+
+; RAX 14
+%macro sys_rt_sigprocmask 1
+    mov rax, 14         ; sys_rt_sigprocmask
+    mov rdi, 0          ; SIG_BLOCK
+    lea rsi, [rel %1]   ; pointer to new mask
+    xor rdx, rdx        ; old mask = NULL
+    mov r10, 8           ; sizeof(sigset_t)
+    syscall
+%endmacro
+
+; RAX 15
+%macro sys_rt_sigreturn 0
+    mov rax, 15
+    syscall
+%endmacro
+
+; RAX 16
+%macro sys_ioctl 2
+    mov rax, 16          ; syscall: ioctl
+    mov rdi, %1          ; fd = stdout
+    mov rsi, 0x5413      ; TIOCGWINSZ
+    lea rdx, [rel %2]
+    syscall
+%endmacro
+
+; RAX 17
+%macro sys_pread64 3
+    mov rax, 17
+    mov rsi, %1
+    mov rdx, %2
+    mov r10, %3
+    syscall
+%endmacro
+
+; RAX 18
+%macro sys_pwrite64 3
+    mov rax, 18
+    lea rsi, [rel %1]
+    mov rdx, %2
+    mov r10, %3
+    syscall
+%endmacro
+
+; RAX 19
+%macro sys_readv 2
+    mov rax, 19
+    mov rsi, %1
+    mov rdx, %2
+    syscall
+%endmacro
+
+; RAX 20
+%macro sys_writev 2
+    mov rax, 20
+    mov rsi, %1
+    mov rdx, %2
+    syscall
+%endmacro
+
+; RAX 21 
+%macro sys_access 1
+    mov rax, 21          ; syscall: access
+    lea rdi, [rel %1]
+    xor rsi, rsi         ; mode = F_OK (existence)
+    syscall
+%endmacro
+
+; RAX 22
+%macro sys_pipe 1
+    lea rdi, [rel %1]   ; pointer to pipefd array
+    mov rax, 22         ; syscall: pipe
+    syscall
+%endmacro
+
+; RAX 23
+%macro sys_select 3
+    mov rax, 23
+    mov rdi, %1               ; n = max fd + 1
+    lea rsi, [rel %2]
+    xor rdx, rdx              ; outp = NULL
+    xor r10, r10              ; exp = NULL
+    lea r8, [rel %3]          ; timeout pointer
+    syscall
+%endmacro
+
+; RAX 24
+%macro sys_sched_yield 0
+    mov rax, 24
+    syscall
+%endmacro
+
+; RAX 25
+%macro sys_mremap 3
+    mov rdi, %1         ; old address
+    mov rsi, %2         ; old length
+    mov rdx, %3         ; new length
+    mov r10, 1          ; MREMAP_MAYMOVE
+    xor r8, r8          ; new_addr = 0 (kernel chooses)
+    mov rax, 25         ; syscall number
+    syscall
+%endmacro
+
+; RAX 26
+%macro sys_msync 3
+    mov rdi, %1         ; start address
+    mov rsi, %2         ; length
+    mov rdx, %3         ; flags
+    mov rax, 26         ; syscall number
+    syscall
+%endmacro
+
+; RAX 27
+%macro sys_mincore 3
+    mov rax, 27               ; sys_mincore
+    mov rdi, %1               ; start = allocated page
+    mov rsi, %2               ; length = 4096
+    lea rdx, [%3]            ; vec buffer
+    syscall
+%endmacro
+
+; RAX 28
+%macro sys_madvise 3
+    mov rax, 28               ; sys_madvise
+    mov rdi, %1               ; start = allocated page
+    mov rsi, %2               ; length = 1 page
+    mov rdx, %3               ; behavior = MADV_DONTNEED (usually 4)
+    syscall
+%endmacro
+
+; RAX 29
+%macro sys_shmget 3
+    mov rax, 29              ; sys_shmget
+    xor rdi, %1              ; key = IPC_PRIVATE (0)
+    mov rsi, %2              ; size = 4096 bytes
+    mov rdx, %3              ; shmflg = IPC_CREAT | 0666 (octal 0666 = 438 decimal)
+    syscall
+
+    cmp rax, 0
+    jl _exit_error_code_1
+%endmacro
+
+; RAX 30
+%macro sys_shmat 0
+    mov rax, 30              ; sys_shmat
+    mov rdi, %1              ; shmid
+    xor rsi, rsi             ; shmaddr = NULL
+    xor rdx, rdx             ; shmflg = 0
+    syscall
+
+    cmp rax, -4095
+    jae _exit_error_code_1
+%endmacro
+
+; RAX 31
+%macro sys_shmctl 3
+    mov rax, 31              ; syscall number
+    mov rdi, %1              ; shmid
+    mov rsi, %2              ; cmd
+    mov rdx, %3              ; buf pointer
+    syscall
+
+    cmp rax, 0
+    jl _exit_error_code_1
+%endmacro
+
+; RAX 32
+%macro sys_dup 1
+    mov rax, 32       ; sys_dup
+    mov rdi, %1       ; file descriptor = stdout
+    syscall
+%endmacro
+
+; RAX 33
+%macro sys_dup2 2
+    mov rax, 33        ; sys_dup2
+    mov rdi, %1        ; oldfd = stdout
+    mov rsi, %2        ; newfd = stderr
+    syscall
+%endmacro
+
+; RAX 34
+%macro sys_ 0
+    mov rax, 34
+    syscall
+%endmacro
+
+; RAX 35
+%macro sys_ns_sleep 1
+    mov rax, 35                 ; sys_nanosleep system call number for x86-64 Linux
+    mov rdi, %1                 ; Pointer to the time struct
+    xor rsi, rsi
+    syscall
+%endmacro
+
+; RAX 36
+%macro sys_getitimer 2
+    mov rax, 36           ; sys_getitimer
+    mov rdi, %1           ; which = ITIMER_REAL (0)
+    lea rsi, [%2]      ; pointer to itimerval struct
+    syscall
+
+    cmp rax, 0
+    jl _exit_error_code_1
+%endmacro
+
+; RAX 37
+%macro sys_alarm 1
+    mov rax, 37       ; sys_alarm
+    mov rdi, %1       ; seconds = 5
+    syscall
+%endmacro
+
+; RAX 38
+%macro sys_setitimer 3
+    mov rax, 38        ; sys_setitimer
+    mov rdi, %1        ; which = ITIMER_REAL (0)
+    lea rsi, [%2]      ; pointer to new timer
+    lea rdx, [%3]      ; pointer to old timer
+    syscall
+%endmacro
+
+; RAX 39
+%macro sys_getpid 0
+    mov rax, 39
+    syscall
+%endmacro
+
+; RAX 40
+%macro sys_sendfile 4
+    mov rax, 40           ; sys_sendfile
+    mov rdi, %1           ; out_fd = stdout
+    mov rsi, %2           ; in_fd
+    lea rdx, [%3]         ; pointer to offset (optional, can be NULL)
+    mov r10, %4           ; count = 1024 bytes
+    syscall
+%endmacro
+
+; RAX 41
+%macro sys_socket 2
+    mov rax, 41           ; sys_socket
+    mov rdi, %2           ; family 
+    mov rsi, %1           ; type 
+    xor rdx, rdx          ; protocol = 0 (default)
+    syscall
+%endmacro
+
+; RAX 42
+%macro sys_connect 3
+    mov rax, 42           ; sys_connect
+    mov rdi, %1           ; fd = sockfd
+    lea rsi, [%2]         ; pointer to sockaddr
+    mov rdx, %3           ; addrlen = sizeof(sockaddr_in)
+    syscall
+    cmp rax, 0
+    jl _exit_error_code_1
+%endmacro
+
+; RAX 43
+%macro sys_accept 3
+    mov rax, 43            ; sys_accept
+    mov rdi, %1            ; fd = listening socket
+    lea rsi, [%2]          ; pointer to client sockaddr
+    lea rdx, [%3]          ; pointer to addrlen
+    syscall
+
+    cmp rax, 0
+    jl _exit_error_code_1
+%endmacro
+
+; RAX 44
+%macro sys_sendto 6
+    mov rax, 44           ; sys_sendto
+    mov rdi, %1           ; fd
+    lea rsi, [%2]         ; buffer
+    mov rdx, %3           ; length
+    mov r10, %4           ; flags = 0
+    lea r8, [%5]          ; destination address
+    mov r9d, %6           ; addrlen = 16 bytes (IPv4)
+    syscall
+
+    cmp rax, 0
+    jl _exit_error_code_1
+%endmacro
+
+; RAX 45
+%macro sys_recvfrom 6
+    mov rax, 45                ; sys_recvfrom
+    mov rdi, %1                ; fd
+    lea rsi, [%2]              ; buffer
+    mov rdx, %3                ; buffer size
+    mov r10, %4                ; flags = 0
+    lea r8, [%5]               ; pointer to store sender address
+    lea r9, [%6]               ; pointer to addrlen
+    syscall
+%endmacro
+
+; RAX 60
+%macro sys_exit 1
+    mov rax, 60
+    mov rdi, %1
+    syscall
+%endmacro
+
+; RAX 257
+%macro sys_create_file 1
+    mov rax, 257        ; sys_openat
+    mov rdi, -100       ; AT_FDCWD
+    mov rsi, %1         ; file
+    mov rdx, O_CREAT | O_WRONLY
+    mov r10, file_mode
+    syscall
+
+    cmp rax, 0FFFFFFFFFFFFFFFFh ; Check if return value is -1 (error)
+    je _exit_error_code_1       ; Error handling
+
+    mov rdi, rax               ; File descriptor from the open call
+    mov rax, 3                 ; sys_close system call number
+    syscall
+%endmacro

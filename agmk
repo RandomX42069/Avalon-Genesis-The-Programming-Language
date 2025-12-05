@@ -1,0 +1,6 @@
+@json test.json "tests/c_dir"
+jsonStart()
+
+@function testCommand
+    echo "hello world!"
+@end

@@ -1,0 +1,8 @@
+v0.1
+Avalon Genesis Compiler: AGC
+Avalon Genesis Parser: AGP
+Avalon Genesis Intepreter: AGI
+Avalon Abstract Token: AAst
+
+v0.2
+agk/avk: Avalon Genesis Makefile

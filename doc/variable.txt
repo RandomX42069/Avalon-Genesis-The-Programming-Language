@@ -1,0 +1,7 @@
+v0.1
+%validVariable = 1
+%validVariable2 = "dfkljsfdjdf"
+%validVariable3 = True
+
+v0.2
+nothing...

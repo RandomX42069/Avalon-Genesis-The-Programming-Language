@@ -1,0 +1,13 @@
+v0.1
+@exclude function function_name(param)
+    (
+        code that 
+        will be interpreted
+        instead of compiled
+        and included in the
+        assembly output
+    )
+@endexfunc
+
+v0.2
+empty

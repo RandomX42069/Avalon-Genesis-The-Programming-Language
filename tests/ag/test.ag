@@ -1,0 +1,32 @@
+/*
+* Custom programming language I made
+*/
+printf("df")
+
+@function functionName()
+    %variableLocal // note that this isn't implemented since idk how to implement local vars
+/*
+valid multi-line comment
+*/
+; valid comment
+# valid comment
+@endfunc
+
+@struct
+    @structfield::"value"
+@structend structname
+
+@if (1 < 2)
+    printf("2 is bigger than 1")
+@endif
+
+/*
+but how do you implement stacked ands(&&)?
+for example:
+@if (1 < 2 && 2 > 1)
+(do something)...
+@endif
+
+the problem here is how do you parse each if into AST tokens?
+what python library can do it?
+*/

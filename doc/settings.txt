@@ -1,0 +1,9 @@
+v0.1
+AGC-SETTINGS:
+    Target Arch: x86_64(Linux)
+    Args: 
+        --debug
+        --dbg,val
+    
+v0.2
+nothing yet

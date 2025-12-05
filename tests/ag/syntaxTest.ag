@@ -1,0 +1,56 @@
+// comment
+; comment
+# comment
+/*
+comment
+*/
+
+@function FunctionName(arguement)
+@endfunc
+
+printf("hello world!")
+
+@non-function function(arguement)
+/*
+* Huge language comment test
+* foo, bar, faz, boo
+* document
+* blah blah blah
+* blo blo blo
+*/
+@endnf
+
+@exclude interpretedOnlyFunction(arg)
+/*
+* this language is both compiled and interpreted
+*/
+@endexfunc
+
+%variable = 1
+@struct
+    @field::"value"
+@structend structName
+
+@if (1 < 2 && 2 > 1)
+@endif
+
+@header test.c
+#include <stdio.h>
+
+int main() {
+    printf("hello world");
+    return 0;
+}
+@end
+// after this test.c will appear in the workspace with this content
+@header test.py
+print("hello world!")
+@end
+// does work
+@header file.anylanguageBtw
+blah blah blah,
+printf that
+sys.exit this
+@end
+
+%Arrray NewArrayOrList = [1, 2, 3.14]

@@ -1,0 +1,14 @@
+v0.1 comments
+# valid comment(python style)
+// valid comment(C style)
+; valid comment(Assembly style)
+
+v0.2 comments 
+MULTI-LINE COMMENT ADDED!
+/*
+* foo bar
+* C multi-line comment added btw
+*/
+
+printf("hello world!" /* This is inline supported btw */) /* Also outline! */
+comment parsing APIs are in the AGLANG open source language

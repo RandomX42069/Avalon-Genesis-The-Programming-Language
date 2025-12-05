@@ -1,0 +1,15 @@
+v0.1
+AGC-String:
+    processString: 
+        Process string from AG source to NASM source, example:
+            "hello world!\n" -> "hello world!", 0x0A, 0
+            useful for almost everything
+    
+    processStringBloat:
+        Process string values to raw values, example:
+            "hello" -> hello
+            useful for raw printing to prevent:
+                printf("hello") -> stdout: "hello"
+
+v0.2
+empty...

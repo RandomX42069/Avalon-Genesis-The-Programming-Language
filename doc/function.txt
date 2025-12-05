@@ -1,0 +1,59 @@
+@function functionName(arg)
+@endfunc
+
+
+# Avalon Genesis Calling Convention (AGCC)
+# -----------------------------------------
+# Args (in order): RDI, RSI, RDX, RCX, R8, R9
+# Float Args: xmm0-xmm7
+# Return: RAX
+
+7 args
+function:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 16
+
+    pop rdi
+    pop rsi
+    pop rdx
+    pop rcx
+    pop r8
+    pop r9
+    # 6 args are handled but now what's gonna handle the 7th one?
+    # well, let's take a look at a real function
+
+    leave 
+    ret
+
+7 arg
+foo:
+    push rbp
+    mov  rbp, rsp
+    sub  rsp, 16           ; reserve locals (keep stack aligned)
+
+    mov  rax, [rbp + 16]   ; g (7th arg) comes from stack
+
+    ; Example operation: add them all together
+    add  rax, rdi
+    add  rax, rsi
+    add  rax, rdx
+    add  rax, rcx
+    add  rax, r8
+    add  rax, r9
+
+    leave
+    ret
+
+Built-in:
+    printf(string)
+    input(string)
+    clearInputBuffer(int)
+    create_file(string)
+    wait(int)
+    asmm(string)
+    asmd(string)
+    asmmi(string)
+    asmdi(string)
+    agcp(string)
+    agcpd(string)

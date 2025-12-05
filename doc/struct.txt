@@ -1,0 +1,10 @@
+v0.1
+%struct
+    %structureAttribute
+    %illegalStructureAttribute 213123432234
+%structend structure_name
+
+v0.2 unification
+@struct
+    @structfield::value
+@structend

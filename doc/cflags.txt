@@ -1,0 +1,13 @@
+compiler flags
+v0.1
+--debug /* used to debug log */
+--dbg,val /* debug values */
+
+v0.2
+--fx86_64-linux /* x86_64 linux asm */
+--wslld /* uses WSL's LD */
+--clo /* clear object file output */
+--cloa /* clear asm file output */
+
+introducing: PACKED ARGS!
+--x64-linux -> ["--fx86_64-linux", "--wslld", "--clo", "--cloa"]

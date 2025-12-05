@@ -1,0 +1,9 @@
+v0.1
+agcp ( arg1: string, prefilx: bool) # print a string for message during compilation
+agcpd () # print documented file information for message during compilation
+
+dagcp ( arg1: string) # print a string for message during compilation if --debug was used
+dvagcp ( arg1: string) # print a string for message during compilation if --dbg,val was used
+
+v0.2
+empty..

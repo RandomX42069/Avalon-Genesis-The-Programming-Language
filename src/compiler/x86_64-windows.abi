@@ -1,0 +1,41 @@
+; Windows x86_64 ABI (AGLang)
+
+extern ExitProcess
+
+%macro sys_exit 1
+    sub rsp, 32            ; shadow space
+    mov ecx, %1            ; exit code → RCX
+    call ExitProcess
+%endmacro
+
+%macro callfn0 1
+    sub rsp, 32
+    call %1
+    add rsp, 32
+%endmacro
+
+%macro callfn1 2
+    sub rsp, 32
+    mov rcx, %2
+    call %1
+    add rsp, 32
+%endmacro
+
+%macro callfn2 3
+    sub rsp, 32
+    mov rcx, %2
+    mov rdx, %3
+    call %1
+    add rsp, 32
+%endmacro
+
+%macro prologue 0
+    push rbp
+    mov rbp, rsp
+%endmacro
+
+%macro epilogue 0
+    mov rsp, rbp
+    pop rbp
+    ret
+%endmacro

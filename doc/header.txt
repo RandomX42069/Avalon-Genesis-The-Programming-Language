@@ -1,0 +1,15 @@
+v0.1
+@header test.c
+#include <stdio.h>
+
+int main() {
+    printf("Hello world");
+    return 0;
+}
+@end
+(After this, test.c will be created in the current workspace of the source file)
+
+v0.2 unification
+/*
+* Right now AGLANG will use shlex library to parse strings in headers
+*/

@@ -1,0 +1,9 @@
+v0.1
+arrays examples:
+%Array charsNStrings = ["string 1", "string 2", 255] ; return an array with a define bytes(db)
+%DoubleArray idk = ["char16 string", 65355] ; return an array with a define word(dw)
+%DDArray idkEither = ["string?", 21243324234432342] ; return an array with a define double word(dd)
+%QArray FloatAndInt = ["fdjshdfjhkdfs", 13290878349789342798, 2.454] ; return an array with a define quad(dq)
+
+v0.2
+empty...

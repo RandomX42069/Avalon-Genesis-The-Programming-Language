@@ -1,0 +1,10 @@
+v0.1
+AGI-CONSTANTS:
+    CURRENT_FILE: current_file
+    AGC_FLAGS: AGCF
+    AGC_BUILD_MODE: Mode(Normal, Debug)
+    AGC_VERSION: v0.1
+    AGI_VERSION: v0.1
+
+v0.2
+    changed AGI/AGC version to v0.2

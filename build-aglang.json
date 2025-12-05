@@ -1,0 +1,43 @@
+{
+    "name": "Avalon Genesis/AGLang Programming language build(v0.2)",
+    "metadata": {
+        "$github-repo": "https://github.com/RandomX42069/Avalon-Genesis-The-Programming-Language",
+        "$description": "Custom programming language made by solo dev: RandomX42069"
+    },
+
+    "$languages": {
+        "$c": {
+            "$msys-dll-path": "D:\\MSYS2\\usr\\bin\\msys-2.0.dll"
+        }
+    },
+
+    "$tool-chain": {
+        "$gcc": {
+            "copy-msys2-dll": true,
+            "path": "D:\\MSYS2\\usr\\bin\\gcc.exe"
+        },
+        "$clang": {
+            "copy-msys2-dll": false,
+            "path": "D:\\MSYS2\\usr\\bin\\clang.exe"
+        }
+    },
+
+    "builders":{
+        ".c": {
+            "path": "D:\\MSYS2\\usr\\bin\\bash.exe",
+            "args": ["-lc", "gcc"]
+        }
+    },
+    "ignore": {
+        "dirs": [
+            "AAst",
+            "args_handler",
+            "avk",
+            "avmp",
+            "compiler",
+            "egg",
+            "interpreter",
+            "vm"
+        ]
+    }
+}

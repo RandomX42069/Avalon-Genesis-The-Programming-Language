@@ -1,0 +1,20 @@
+v0.1
+THIS LOOP DOCUMENT ISN'T IMPLEMENTED TO THE LANGUAGE YET
+
+while loops:
+@while (statement)
+@endw
+
+examples:
+@while (AGC_REG_AX < 5) // note that AGC will replace AGC_REG_AX with the register "rax" if it's a x64 linux or "eax" if it's a x86 linux
+    printf("hello world inside loop!\n")
+@endw
+
+@while (1) // 1 or bigger than one will become a inf loop
+@endw
+
+@while (0) // 0 won't make a loop execute
+@endw
+
+v0.2
+looks pretty empty...

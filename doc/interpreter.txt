@@ -1,0 +1,68 @@
+v0.1
+NOTE THAT ALL OF THESE CONTENTS ONLY WORK IN INTERPRETER Environment
+MEANING YOU CANNOT TOUCH THINGS OUTSIDE THE INTERPRETER SCOPE!
+
+Interpreter-CONSTANTS:
+    CURRENT_FILE: current_file
+    AGC_FLAGS: AGCF
+    AGC_BUILD_MODE: Mode(Normal, Debug)
+    AGC_VERSION: v0.1
+    AGI_VERSION: v0.1
+
+CONSTANTS example:
+    printf(CURRENT_FILE)
+
+library:
+    tkinter:
+        function:
+            tk.window.initializeWindow(name: string, size: list)
+            tk.window.startWindow()
+            tk.widget.AddWidgetButton(btext: string, pos: list, size: list)
+            tk.widget.SetButtonStateEnable(state: int) // state = 0 -> false, state 1 -> true
+
+Variables:
+    %variableName = value
+
+if-statement:
+    @if (statement do not pack in one single statement)
+    @endif
+
+comment:
+    # valid
+    // valid
+    ; valid
+
+built-in:
+    printf(str: string)
+
+venv:
+@exclude function functionName()
+
+() IS INVALID IN THIS DECLARATION BUT IN ORDER TO CALL IT YOU WOULD STILL HAVE TO USE THE ()
+SCOPE FROM OUTSIDE ARE INVALID SINCE THEY ARE IN THE COMPILED SCOPE SO THE INTERPRETER WILL NEVER REACH IT
+YOU HAVE TO DECLARE VARIABLES INSIDE THIS
+EXAMPLE OF INVALID () USAGE:
+    @exclude function function_name()
+    () # <- RIGHT HERE
+    @endexfunc
+@endexfunc
+MESSAGE TO TEACH AI HOW TO CODE AG:
+=== start learning ===
+@exclude function FunctionName() // <- MUST ALWAYS HAVE THESE PARENTHESE SINCE THEY ARE FOR ARGUEMENTS 
+
+example:
+@exclude function functionName() # <- must always include or UNKNOWNASTNODE error will appear
+    printf("hello world!")
+@endexfunc
+
+VARIABLES:
+%var1 = 1 ; is valid
+but in function usage, you don't have to include the "%" preflixes since they are for variable DECLARATION
+example: printf(var1)
+=== end learning ===
+
+creates a interpreter instance where code is interpreted and not included inside the assembly output,
+note that you can call the function to execute
+
+v0.2
+empty...

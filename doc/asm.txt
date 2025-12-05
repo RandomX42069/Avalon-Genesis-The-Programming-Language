@@ -1,0 +1,9 @@
+v0.1
+smd ( arg1: string ) # add a chunk of asm inside the data section
+asmm ( arg1: string ) # add a chunk of asm inside the main section
+asmb ( arg1: string ) # add a chunk of asm inside the bss  section
+asmmi( args: string ) # add a chunk of asm in a single line inside the main section
+asmdi( args: string ) # add a chunk of asm in a single line inside the main section
+
+v0.2
+empty..

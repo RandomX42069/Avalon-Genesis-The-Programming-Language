@@ -1,0 +1,8 @@
+1: compile Aglang
+command line:
+python agk.py Aglang_dir
+
+2: get nasm.exe
+you can get nasm assembler at nasm.us
+
+3: enjoy
